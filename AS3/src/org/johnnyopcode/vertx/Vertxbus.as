@@ -71,7 +71,8 @@ public class Vertxbus
 				if (onclose != null)
 					onclose.call(this);
 				
-				ping.stop();
+				if (ping)
+					ping.stop();
 			});
 
 			socket.addEventListener(WebSocketEvent.MESSAGE, function(event: WebSocketEvent): void

@@ -56,15 +56,15 @@ import org.johnnyopcode.vertx.Vertxbus;
 
 			//var vertx:Vertxbus = new Vertxbus("http://localhost:8080/eventbus");
 			var vertx:Vertxbus = new Vertxbus("https://localhost:4443/eventbus");
-			vertx.onopen = function()
+			vertx.onopen = function():void
 			{
 				textArea.appendText("Connected\n");
-				vertx.registerHandler("GLOBAL", function(body, replyHandler)
+				vertx.registerHandler("GLOBAL", function(body, replyHandler):void
 				{
 					textArea.appendText("Received message on global: " + body.text + "\n");
 				});
 				
-				textInput.addEventListener(KeyboardEvent.KEY_UP, function(e:KeyboardEvent)
+				textInput.addEventListener(KeyboardEvent.KEY_UP, function(e:KeyboardEvent):void
 				{
 					if (vertx.readyState() == Vertxbus.OPEN && e.keyCode == 13)
 					{
@@ -72,7 +72,7 @@ import org.johnnyopcode.vertx.Vertxbus;
 						vertx.publish(addressInput.text, { text: textInput.text }, null );
 					}
 				});
-				addressInput.addEventListener(KeyboardEvent.KEY_UP, function(e:KeyboardEvent)
+				addressInput.addEventListener(KeyboardEvent.KEY_UP, function(e:KeyboardEvent):void
 				{
 					if (vertx.readyState() == Vertxbus.OPEN && e.keyCode == 13)
 					{
@@ -81,16 +81,16 @@ import org.johnnyopcode.vertx.Vertxbus;
 					}
 				});
 			}
-			vertx.onmessage = function(event)
+			vertx.onmessage = function(event):void
 			{
 				var msg:Object = JSON.parse(event.data);
 				textArea.appendText("Received message! Sent to: " + msg.address + " Message: " + event.data + "\n");
 			}
-			vertx.onclose = function()
+			vertx.onclose = function():void
 			{
 				textArea.appendText("Disconnected\n");
 			}
-			vertx.onerror = function(event)
+			vertx.onerror = function(event):void
 			{
 				textArea.appendText(event.text + "\n");
 				//textArea.appendText("Certificate status: " + (vertx.socket.socket as SecureSocket).serverCertificateStatus + "\n");
